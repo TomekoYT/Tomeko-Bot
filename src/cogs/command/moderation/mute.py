@@ -33,7 +33,7 @@ class Mute(commands.Cog):
         minutes = minutes or 0
 
         duration = timedelta(days=days, hours=hours, minutes=minutes, seconds=0)
-        await user.timeout_for(duration)
+        await self.mute_user(user, duration)
 
         embed = discord.Embed(title="Success!", color=discord.Color.random())
         embed.add_field(name="Muted:", value=f"{user.mention} has been muted from the server by {ctx.author.mention}.", inline=False)
@@ -44,6 +44,9 @@ class Mute(commands.Cog):
         channel = discord.utils.get(ctx.guild.channels, id=constants.MOD_LOGS_ID)
         mod_logs_embed = discord.Embed(description=f"{user.mention} was muted by {ctx.author.mention}. Duration: {duration}. Reason: {reason}", color=discord.Color.random())
         await channel.send(embed=mod_logs_embed)
+    
+    async def mute_user(self, user, duration):
+        await user.timeout_for(duration)
 
     @mute.error
     async def mute_error(self, ctx, error):

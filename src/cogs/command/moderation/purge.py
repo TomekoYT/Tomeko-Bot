@@ -30,9 +30,12 @@ class Purge(commands.Cog):
                                        color=discord.Color.random())
         await channel.send(embed=mod_logs_embed)
 
+        await self.purge_user(ctx.guild, user)
+
+    async def purge_user(self, guild, user):
         cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
 
-        for channel in ctx.guild.text_channels:
+        for channel in guild.text_channels:
             if channel.id in constants.RESTRICTED_CLEAR_CHANNELS:
                 continue
 
