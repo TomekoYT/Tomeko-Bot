@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from src.utils import constants
+from utils import constants
 
 
 class Welcome(commands.Cog):

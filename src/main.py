@@ -7,7 +7,7 @@ bot = commands.Bot(command_prefix=constants.PREFIX, intents=discord.Intents.all(
 
 @bot.event
 async def on_ready():
-  print("Bot is online!")
+    print("Bot is online!")
 
 for root, dirs, files in os.walk("src/cogs"):
     for file in files:

@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import MissingAnyRole
-from src.utils import constants
+from utils import constants
 
 
 class Ban(commands.Cog):

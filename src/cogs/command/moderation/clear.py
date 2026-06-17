@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from discord.ext.commands import MissingAnyRole
-from src.utils import constants
+from utils import constants
 
 
 class Clear(commands.Cog):
@@ -21,9 +21,7 @@ class Clear(commands.Cog):
             embed = discord.Embed(title="Failure!", description="You cannot use this command here", color=discord.Color.random())
             await ctx.respond(embed=embed, ephemeral=True)
             return
-
-        self.clearnumber = number
-        await ctx.channel.purge(limit=number)
+        
         embed = discord.Embed(title="Success!", color=discord.Color.random())
         embed.add_field(name="You have cleared:", value=f"{number} message(s).", inline=False)
         await ctx.respond(embed=embed, ephemeral=True)
@@ -31,6 +29,9 @@ class Clear(commands.Cog):
         channel = discord.utils.get(ctx.guild.channels, id=constants.MOD_LOGS_ID)
         mod_logs_embed = discord.Embed(description=f"{ctx.author.mention} cleared {number} message(s) from <#{ctx.channel.id}>", color=discord.Color.random())
         await channel.send(embed=mod_logs_embed)
+
+        self.clearnumber = number
+        await ctx.channel.purge(limit=number)
 
     @clear.error
     async def clear_error(self, ctx, error):
