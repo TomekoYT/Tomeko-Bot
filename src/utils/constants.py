@@ -1,8 +1,6 @@
 from discord import Activity, ActivityType, Color, Embed
-from os import getenv
 
 # BOT
-TOKEN = str(getenv("BOT_TOKEN"))
 PREFIX = "/"
 ACTIVITY = Activity(type=ActivityType.listening, name="NOT a clanker")
 

@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv
 from utils import constants
 
 bot = commands.Bot(command_prefix=constants.PREFIX, intents=discord.Intents.all(), activity=constants.ACTIVITY)
@@ -18,4 +19,5 @@ for root, dirs, files in os.walk("src/cogs"):
             bot.load_extension(path)
             print("Cog: " + path + " loaded!")
 
-bot.run(constants.TOKEN)
+load_dotenv()
+bot.run(str(os.getenv("BOT_TOKEN")))
