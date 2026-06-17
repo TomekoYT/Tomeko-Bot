@@ -30,11 +30,10 @@ class Purge(commands.Cog):
                                        color=discord.Color.random())
         await channel.send(embed=mod_logs_embed)
 
-        await self.purge_user(ctx.guild, user)
+        duration = datetime.now(timezone.utc) - timedelta(hours=24)
+        await self.purge_user(ctx.guild, user, duration)
 
-    async def purge_user(self, guild, user):
-        cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
-
+    async def purge_user(self, guild, user, duration):
         for channel in guild.text_channels:
             if channel.id in constants.RESTRICTED_CLEAR_CHANNELS:
                 continue
@@ -42,7 +41,7 @@ class Purge(commands.Cog):
             await channel.purge(
                 limit = None,
                 check = lambda m: (
-                    m.author.id == user.id and m.created_at >= cutoff
+                    m.author.id == user.id and m.created_at >= duration
                 ),
                 bulk = True
             )

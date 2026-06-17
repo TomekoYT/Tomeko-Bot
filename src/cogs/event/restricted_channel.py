@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from utils import constants
 
 class RestrictedChannel(commands.Cog):
@@ -29,7 +29,8 @@ class RestrictedChannel(commands.Cog):
         if purge_cog:
             await purge_cog.purge_user(
                 guild = message.guild,
-                user = message.author
+                user = message.author,
+                duration = datetime.now(timezone.utc) - timedelta(minutes=1)
             )
 
 
