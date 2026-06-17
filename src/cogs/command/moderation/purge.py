@@ -9,7 +9,7 @@ class Purge(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @discord.slash_command(guild_ids=constants.GUILD_ID, name="purge", description="Purge user's messages from the last 72 hours")
+    @discord.slash_command(guild_ids=constants.GUILD_ID, name="purge", description="Purge user's messages from the last 24 hours")
     @commands.has_any_role(*constants.MOD_ROLES)
     async def purge(self, ctx,
                   user: discord.Option(discord.Member, description="Mention the user to purge", required=True),
@@ -20,17 +20,17 @@ class Purge(commands.Cog):
             return
         
         embed = discord.Embed(title="Success!", color=discord.Color.random())
-        embed.add_field(name="Purged:", value=f"{ctx.author.mention} purged all {user.mention} messages from the last 72 hours.",
+        embed.add_field(name="Purged:", value=f"{ctx.author.mention} purged all {user.mention} messages from the last 24 hours.",
                         inline=False)
         embed.add_field(name="Reason:", value=reason, inline=False)
         await ctx.respond(embed=embed, ephemeral=True)
 
         channel = discord.utils.get(ctx.guild.channels, id=constants.MOD_LOGS_ID)
-        mod_logs_embed = discord.Embed(description=f"{ctx.author.mention} purged all {user.mention} messages from the last 72 hours. Reason: {reason}",
+        mod_logs_embed = discord.Embed(description=f"{ctx.author.mention} purged all {user.mention} messages from the last 24 hours. Reason: {reason}",
                                        color=discord.Color.random())
         await channel.send(embed=mod_logs_embed)
 
-        cutoff = datetime.now(timezone.utc) - timedelta(hours=72)
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
 
         for channel in ctx.guild.text_channels:
             if channel.id in constants.RESTRICTED_CLEAR_CHANNELS:
