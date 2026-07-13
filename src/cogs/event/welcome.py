@@ -9,7 +9,7 @@ class Welcome(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, user):
-        for role in constants.AUTOROLES:
+        for role in constants.AUTO_ROLES:
             auto_role = discord.utils.get(user.guild.roles, id=role)
             await user.add_roles(auto_role)
 
